@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <script src="/public/angular.min.js"></script>
+    <script src="/public/angular.js"></script>
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body ng-controller="myController">
+    {{2+2}}
+
+    <% if(user) { %>
+      <nav>
+        <span><%= user.username %></span>
+        <img src="<%= user.avatar_path %>" alt="">
+      </nav>
+    <% } else { %>
+      <nav>
+      <!-- <a href="/signin">Register</a>
+        <a href="/login">Log in</a> -->
+        <a href="/oauth/twitter">Login by Twitter</a>
+      </nav>
+    <% } %>
+    <h1>POST</h1>
+     <section>
+       <% msgs.forEach(function(msg) { %>
+         <div>
+           <h2><%= msg.username %></h2>
+           <time><%= msg.date %></time>
+           <p><%= msg.message %></p>
+           <% if(msg.image_path) { %>
+             <img src="<%= msg.image_path %>" alt="">
+           <% } %>
+         </div>
+       <% }) %>
+     </section>
+  </body>
+</html>

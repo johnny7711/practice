@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html ng-app="myApp" lang="ja">
+  <head>
+    <meta charset="shift_jis">
+    <title>AngularJS</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.min.js"></script>
+    <script src="scripts/controller.js">
+    </script>
+  </head>
+  <body ng-controller="MyController">
+    <form name="myForm" novalidate>
+      <div>
+        <label for="mail">mail address: </label><br>
+        <input type="email" name="mail" id="mail" ng-model="user.mail" required ng-minlength="10" ng-maxlength="20">
+        <span ng-messages="myForm.mail.$error">
+          <span ng-message="required">入力は必須です。</span>
+          <span ng-message="minlength, maxlength">入力値が短すぎるか、長すぎます。</span>
+          <span ng-message="email">正しいメール形式で入力してください</span>
+        </span>
+      </div>
+    </form>
+
+  </body>
+</html>

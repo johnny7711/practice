@@ -1,0 +1,20 @@
+.red {
+  background-color: #f00;
+  color: #fff
+}
+.green {
+  background-color: #0f0;
+}
+.blue {
+  background-color: #00f;
+  color: #fff
+}
+.even {
+  background-color: #00f;
+  color: #fff
+}
+.odd {
+  background-color: #f00;
+  color: #fff
+}
+input.ng-invalid { background-color: '#fee'; }

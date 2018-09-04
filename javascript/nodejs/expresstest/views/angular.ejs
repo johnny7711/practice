@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app='myApp'>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular.min.js"></script>
+    <script src="/public/angular.js"></script>
+    <title>angular</title>
+  </head>
+  <body ng-controller='myController'>
+    <form name="myForm" novalidate>
+      <label for="name">name:</label>
+      <input type="text" name="name" id="name" ng-model="name">
+      <button ng-click="onclick()">POST</button>
+    </form>
+    <div>
+      {{result.input}}
+      {{result.fname}}
+      {{result.age}}
+  {{msg}}
+    </div>
+    <p></p>
+  </body>
+</html>

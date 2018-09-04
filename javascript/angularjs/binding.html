@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html ng-app="myApp" lang="ja">
+  <head>
+    <meta charset="shift_jis">
+    <title>AngularJS</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.3.0/js/graphics.min.js"></script>
+    <script src="scripts/binding.js"></script>
+    <link rel="stylesheet" href="scripts/main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body ng-controller="MyController">
+  <div ng-pluralize count="favs.length" offset="2"
+    when="{
+      '0': '[いいね]されていません。',
+      '1': '{{favs[0]}}さんが[いいね]といっています。',
+      '2': '{{favs[0]}}さん、{{favs[1]}}さんが[いいね]といっています。',
+      'one': '{{favs[0]}}さん、{{favs[1]}}さんとあと１名が[いいね]といっています。',
+      'other': '{{favs[0]}}さん、{{favs[1]}}さん、他{}名が[いいね]といっています。',
+    }">
+  </div>
+  <a ng-href="{{url}}">サイトへ</a>
+  <form>
+    <label for="name">名前：</label>
+    <input type="text" name="name" id="name" ng-model="myName">
+    <button ng-click="onclick()">送信</button>
+  </form>
+  <div>
+    {{greeting}}
+  </div>
+  <img ng-src="{{path}}" alt="droid" ng-mouseenter="onmouseenter()" ng-mouseleave="onmouseleave()">
+
+  <form>
+    <button ng-click="myStyle= 'red'">赤</button>
+    <button ng-click="myStyle= 'blue'">青</button>
+    <button ng-click="myStyle= 'green'">緑</button>
+  </form>
+  <div ng-class="myStyle">
+    <p>COLOR</p>
+  </div>
+
+  <form>
+    <label for="show">表示／非表示：</label>
+    <input type="checkbox" id="show" ng-model="show">
+    <button ng-click="onclick2()">反転</button>
+  </form>
+  <div id="panel" class="panel panel-default" ng-if="!show">
+    <p>I'm trying to use ngSanitize so that I can inject html content ( external) into my app. However I got stuck at the ngSanitize installation. If I add it into my app module it stops working . Should I download this from somewhere ? Angularjs docs don't say anything.</p>
+  </div>
+
+  <form>
+    <select ng-model="season">
+      <option value="">四季を選択</option>
+      <option value="spring">春</option>
+      <option value="summer">夏</option>
+      <option value="fall">秋</option>
+      <option value="winter">冬</option>
+    </select>
+  </form>
+  <div ng-switch="season">
+    <span ng-switch-when="spring">春はあけぼの。。。</span>
+    <span ng-switch-when="summer">夏は夜。</span>
+    <span ng-switch-when="fall">秋は夕暮れ。。</span>
+    <span ng-switch-when="winter">冬はつとめて。。。</span>
+    <span ng-switch-default>選択してください</span>
+  </div>
+
+<table class="table">
+  <tr ng-repeat="(key, value) in author">
+    <th>{{key}}</th>
+    <td>{{value}}</td>
+  </tr>
+</table>
+
+<table class="table">
+  <tr>
+    <th>ISBN</th><th> books</th><th> price</th><th> published</th>
+    <th> date</th>
+  </tr>
+  <tr ng-repeat="book in books | orderBy: 'price' | limitTo: len: start" ng-class-even="'even'" ng-class-odd="'odd'">
+    <td>{{book.isbn}}</td>
+    <td>{{book.title}}</td>
+    <td>{{book.price}}</td>
+    <td>{{book.publish}}</td>
+    <td>{{book.published | date: 'yyyy/mm/dd'}}</td>
+  </tr>
+</table>
+<ul class="pagination">
+  <li><a href="#" ng-click='pager(0)'>1</a></li>
+  <li><a href="#" ng-click='pager(1)'>2</a></li>
+  <li><a href="#" ng-click='pager(2)'>3</a></li>
+</ul>
+
+<form>
+  <label for="mail3">メールアドレス：</label>
+  <input type="email" name="mail3" id="mail3" ng-model="user.mail3" ng-init="user.mail3 = 'hoge@example.com'">
+</form>
+入力された値：{{user.mail}}
+
+<form name="myForm" ng-submit="onsubmit()" novalidate>
+  <div>
+    <label for="magazine">マガジン配信希望</label>
+    <input type="checkbox" name="magazine" id="magazine" ng-model="user.magazine">
+  </div>
+  <div>
+    <label for="mail">メールアドレス：</label>
+    <input type="email" name="mail" id="mail" ng-model="user.mail" ng-required="user.magazine">
+    <span ng-show="myForm.mail.$error.required">メールアドレスは必須です。</span>
+    <span ng-show="myForm.mail.$error.email">メールアドレスを正しい形式で入力してください</span>
+  </div>
+  <div>
+    <label for="password">パスワード：：</label><br>
+    <input type="password" name="passwd" id="passwd" ng-model="user.passwd" required ng-minlength="6">
+    <span ng-show="myForm.passwd.$error.required">パスワードは必須です。</span>
+    <span ng-show="myForm.passwd.$error.minlength">パスワードは6文字以上で入力してください</span>
+  </div>
+  <div>
+    <label for="name">名前（漢字）:</label><br>
+    <input type="text" name="name" id="name" ng-model="user.name" required ng-minlength="3" ng-maxlength="10">
+    <span ng-show="myForm.name.$error.required">名前は（漢字）は必須です。</span>
+    <span ng-show="myForm.name.$error.minlength">名前は（漢字）は3文字以上でで入力してください</span>
+    <span ng-show="myForm.name.$error.maxlength">名前は（漢字）は10文字以上で入力してください</span>
+  </div>
+  <div>
+    <label for="zip">郵便番号：</label><br>
+    <input type="text" name="zip" id="zip" ng-model="user.zip" ng-pattern="/^[0-9]{3}-[0-9]{4}$/">
+    <span ng-show="myForm.zip.$error.pattern">郵便番号は「999-9999」の形式で入力してください</span>
+  </div>
+  <div>
+    <label for="name">備考:</label><br>
+    <textarea name="memo" id="memo" rows="5" cols="30" ng-model="user.memo" ng-maxlength="10"></textarea>
+    <span ng-show="myForm.memo.$error.maxlength">備考は10文字以内で入力してください</span>
+  </div>
+  <div>
+    <input type="submit" value="登録" ng-disabled="myForm.$invalid">
+    <input type="reset" value="リセット" ng-disabled="myForm.$dirty">
+  </div>
+  <div>
+    <textarea rows="8" cols="60" ng-model="tweet" ng-change="onchange()"></textarea>
+    <div ng-style="myStyle">{{count}}</div>
+  </div>
+</form>
+
+<div>
+  書籍：<br>
+  <label ng-repeat-start="book in books">
+    <!-- ng-value は　ng-modelに紐づいて動作する -->
+    <input type="radio" ng-model="data.book" ng-value="book.isbn" id="isbn{{book.isbn}}" name="book">
+    {{book.title}}
+  </label>
+  <br ng-repeat-end>
+</div>
+
+<div>
+  書籍：<br>
+  <label><input type="checkbox" name="all" ng-model="all" ng-chenge="onchange()">すべてをチェック</label><br>
+  <label ng-repeat-start="book in books">
+    <input type="checkbox" ng-model="data.book[book.isbn]" ng-checked="all" ng-true-value="true"
+    ng-false-value="false" id="isbn{{book.isbn}}" name="book{{book.isbn}}">
+    {{book.title}}
+  </label>
+  <br ng-repeat-end>
+</div>
+
+<div>
+  <label for="book">書籍：</label>
+  <select id="book" name="book" ng-model="data.book" ng-options="book.price as book.title group by book.publish for book in books">
+    <option value="">以下から選択してください</option>
+  </select>
+</div>
+選択された値：{{data.book}}
+
+<label>
+  <input type="checkbox" ng-model="selected">標準を選ぶ
+</label>
+<select name="">
+  <option value="easy">簡単コース</option>
+  <option value="usually" ng-selected="selected">ふつうコース</option>
+</select>
+
+<ul>
+  <li ng-repeat="member in members | orderBy: [mySort, '-old']">
+    {{member.name}} ({{member.role}} ･ {{member.old}}歳)
+  </li>
+</ul>
+
+<table class="table">
+  <tr>
+    <th ng-click="name=!name;sort('name', name)">名前</th>
+    <th ng-click="role=!role;sort('mySort', role)">役職</th>
+    <th ng-click="old =!old; sort('old', old)">年齢</th>
+  </tr>
+  <tr ng-repeat="member in members">
+    <td>{{member.name}}</td>
+    <td>{{member.role}}</td>
+    <td>{{member.old}}</td>
+  </tr>
+</table>
+
+<table class="table">
+  <tr>
+    <th> books</th><th> price</th><th> published</th>
+    <th> date</th>
+  </tr>
+  <tr ng-repeat="book in books | filter : '!攻略' as filtered">
+    <td><a ng-href="http://wings.msn.to/index.php/-/A-03/{{book.isbn}}/"></a>{{book.title}}</td>
+    <td>{{book.price}}</td>
+    <td>{{book.publish}}</td>
+    <td>{{book.published | date: 'yyyy/mm/dd'}}</td>
+  </tr>
+</table>
+表示件数：{{filtered.length}}件
+
+
+<div id="stage-container" style="width: 400px; height: 375px;"></div>
+	<script>
+		// create a stage for the Deathly Hallows symbol
+        stage = acgraph.create('stage-container');
+        // draw the square
+        stage.rect(5, 5, 350, 300);
+        // draw the circle
+        stage.circle(177.5, 205, 100);
+        // draw the triangle
+        stage.path()
+            .moveTo(5, 305)
+            .lineTo(175, 5)
+            .lineTo(355, 305);
+        // draw the wand in the middle
+        stage.path()
+            .moveTo(175, 5)
+            .lineTo(175, 305);
+	</script>
+
+
+  </body>
+</html>
